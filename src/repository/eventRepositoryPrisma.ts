@@ -1,4 +1,3 @@
-import { organizer } from './../../node_modules/.prisma/client/index.d';
 import { PrismaClient } from "@prisma/client";
 import type { Event } from "../models/event";
 
@@ -6,7 +5,7 @@ const prisma = new PrismaClient();
 
 export function getEventByCategory(category: string) {
   return prisma.event.findMany({
-    where: { category }
+    where: { category },
   });
 }
 
@@ -18,8 +17,8 @@ export function getEventById(id: number) {
   return prisma.event.findUnique({
     where: { id },
     omit: {
-      organizerId: true
-    }
+      organizerId: true,
+    },
   });
 }
 
@@ -31,23 +30,23 @@ export function getAllEventsWithOrganizer() {
       organizerId: false,
       organizer: {
         select: {
-          name: true
-        }
+          name: true,
+        },
       },
       participants: {
         select: {
           id: true,
           name: true,
-          email: true
-        }
-      }
-    }
+          email: true,
+        },
+      },
+    },
   });
 }
 
 export function getEventByIdWithOrganizer(id: number) {
   return prisma.event.findUnique({
-    where: { id }
+    where: { id },
   });
 }
 export function addEvent(newEvent: Event) {
@@ -59,10 +58,30 @@ export function addEvent(newEvent: Event) {
       location: newEvent.location || "",
       date: newEvent.date || "",
       time: newEvent.time || "",
-      petsAllowed: newEvent.petsAllowed || false
+      petsAllowed: newEvent.petsAllowed || false,
     },
     omit: {
-      organizerId: true
-    }
+      organizerId: true,
+    },
+  });
+}
+
+export function getAllEventsWithOrganizerPagination(
+  pageSize: number,
+  pageNo: number
+) {
+  return prisma.event.findMany({
+    skip: pageSize * (pageNo - 1),
+    take: pageSize,
+    select: {
+      id: true,
+      category: true,
+      organizerId: false,
+      organizer: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
 }
