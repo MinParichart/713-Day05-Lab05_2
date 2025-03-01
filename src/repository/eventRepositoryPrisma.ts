@@ -72,7 +72,12 @@ export async function getAllEventsWithOrganizerPagination(
   pageNo: number
 ) {
   const where = { 
-    title : { contains : keyword}
+    OR: [
+      { title: { contains: keyword } },
+      { description: { contains: keyword } },
+      { category: { contains: keyword } }, 
+      { organizer : { name : {contains : keyword }}}
+    ]
   }
   const events = await prisma.event.findMany({
     where, 
@@ -82,6 +87,7 @@ export async function getAllEventsWithOrganizerPagination(
       id: true,
       title : true, 
       category: true,
+      // description: true, // ถ้าอยากให้มันแสดง description เพิ่มมา ใน .json ก็ใส่ description เข้าไป
       organizerId: false,
       organizer: {
         select: {
