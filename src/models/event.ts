@@ -1,5 +1,5 @@
 import type { Organizer } from "./organizer";
-import type {Participant } from "./participant";
+import type { Participant } from "./participant";
 
 export interface Event {
     id: number;
@@ -14,3 +14,9 @@ export interface Event {
     organizer: Organizer | null;
     participants: Participant[];
   }
+
+export interface PageEvent {
+    count: number;
+    events: Event[];
+}
+  
