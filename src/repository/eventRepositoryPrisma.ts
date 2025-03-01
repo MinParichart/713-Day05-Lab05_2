@@ -85,3 +85,8 @@ export function getAllEventsWithOrganizerPagination(
     },
   });
 }
+
+export function countEvent() {
+  return prisma.event.count();
+}
+  
