@@ -27,7 +27,11 @@ router.get("/", async (req, res) => {
         res.status(500).send("Internal Server Error");
       }
       return;
+    } finally {
+        console.log(`Request is completed. with pageNo=${pageNo} and pageSize=${pageSize}`);
     }
+        
+        
   } else if (req.query.category) {
     const category = req.query.category;
     const filteredEvents = await service.getEventByCategory(category as string);
