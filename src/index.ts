@@ -1,4 +1,5 @@
 
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from "express";
 import multer from 'multer';
@@ -7,6 +8,14 @@ dotenv.config();
 
 import { uploadFile } from './services/uploadFileService';
 const app = express();
+const allowedOrigins = ['http://localhost:5173'];
+const options: cors.CorsOptions = {
+    origin: allowedOrigins
+  };
+  
+  // Then pass these options to cors:
+  app.use(cors(options));
+  
 app.use(express.json());
 app.use('/events',eventRoute);
 // const port = 3000;

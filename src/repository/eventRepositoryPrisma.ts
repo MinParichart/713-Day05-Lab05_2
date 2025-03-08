@@ -24,10 +24,10 @@ export function getEventById(id: number) {
 
 export function getAllEventsWithOrganizer() {
   return prisma.event.findMany({
-    select: {
-      id: true,
-      category: true,
-      organizerId: false,
+    omit: {
+      organizerId: true
+    }, 
+    include: {
       organizer: {
         select: {
           name: true,
