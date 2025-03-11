@@ -21,9 +21,6 @@ app.use('/events',eventRoute);
 // const port = 3000;
 const port = process.env.PORT || 3000;
 
-
-
-
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post('/upload', upload.single('file'), async (req: any, res: any) => {
@@ -46,6 +43,8 @@ app.post('/upload', upload.single('file'), async (req: any, res: any) => {
     res.status(500).send('Error uploading file.');
   }
 });
+
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });

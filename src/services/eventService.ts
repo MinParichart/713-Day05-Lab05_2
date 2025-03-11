@@ -21,8 +21,19 @@ export async function getAllEventsWithPagination(keyword: string, pageSize: numb
   const pageEvents = await repo.getAllEventsWithOrganizerPagination(keyword,pageSize, pageNo);  
   return pageEvents;
 }
+
+export function getParticipantsByEventTitlePagination(eventTitle: string, pageSize: number, pageNo: number) {
+  return repo.getParticipantsByEventTitlePagination(eventTitle, pageSize, pageNo);
+}
+
+export function getAllParticipants() {
+  return repo.getAllParticipants();
+}
+
   
 export function count(){
   return repo.countEvent();
 }
+  
+
   

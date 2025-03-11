@@ -100,7 +100,45 @@ export async function getAllEventsWithOrganizerPagination(
   return { count, events } as PageEvent; 
 }
 
+export function getAllParticipants() {
+  return prisma.participant.findMany();
+}
+
+export function getParticipantsByEventTitlePagination(
+  eventTitle: string,
+  pageSize: number,
+  pageNo: number
+) {
+  console.log("Event Title:", eventTitle);
+  console.log("Page Size:", pageSize);
+  console.log("Page No:", pageNo);
+  
+  return prisma.participant.findMany({
+    skip: pageSize * (pageNo - 1), // คำนวณ offset
+    take: pageSize, // จำกัดจำนวนข้อมูลต่อหน้า
+    where: {
+      events: {
+        some: {
+          title: eventTitle, // กรองตามชื่ออีเวนต์
+        },
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      events: {
+        select: {
+          title: true,
+        },
+      },
+    }, // ค่าที่เลือกมาโชว์
+  });
+}
+    
 export function countEvent() {
   return prisma.event.count();
 }
+  
+
   

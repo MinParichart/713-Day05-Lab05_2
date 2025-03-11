@@ -30,7 +30,7 @@ model event {
   petsAllowed  Boolean
   organizerId  Int?
   organizer    organizer?    @relation(fields: [organizerId], references: [id])
-  participants participant[]
+  participants participant[] 
 }
 
 model organizer {
