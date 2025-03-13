@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import type { Event, PageEvent } from "../models/event";
+import type { PageParticipant } from "../models/participant";
 
 const prisma = new PrismaClient();
 
@@ -104,37 +105,54 @@ export function getAllParticipants() {
   return prisma.participant.findMany();
 }
 
-export function getParticipantsByEventTitlePagination(
-  eventTitle: string,
+export async function getAllParticipantsWithEventPagination(
+  keyword : string,
   pageSize: number,
   pageNo: number
 ) {
-  console.log("Event Title:", eventTitle);
-  console.log("Page Size:", pageSize);
-  console.log("Page No:", pageNo);
-  
-  return prisma.participant.findMany({
-    skip: pageSize * (pageNo - 1), // คำนวณ offset
-    take: pageSize, // จำกัดจำนวนข้อมูลต่อหน้า
-    where: {
-      events: {
-        some: {
-          title: eventTitle, // กรองตามชื่ออีเวนต์
-        },
-      },
-    },
+  const where = { 
+    OR: [
+      { name: { contains: keyword } },
+      { email: { contains: keyword } },
+      // { event : { title : {contains : keyword }}}
+    ]
+  }
+  const participants = await prisma.participant.findMany({
+    where, 
+    skip: pageSize * (pageNo - 1),
+    take: pageSize,
     select: {
       id: true,
-      name: true,
+      name : true, 
       email: true,
       events: {
         select: {
           title: true,
         },
       },
-    }, // ค่าที่เลือกมาโชว์
+    },
+  });
+  const count = await prisma.participant.count({ where }); 
+  return { count, participants } as PageParticipant; 
+}
+
+
+export function getParticipantById(id: number) {
+  return prisma.participant.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name : true, 
+      email: true,
+      events: {
+        select: {
+          title: true,
+        },
+      },
+    },
   });
 }
+
     
 export function countEvent() {
   return prisma.event.count();

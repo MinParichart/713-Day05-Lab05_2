@@ -5,3 +5,8 @@ export interface Participant{
     email: string
     events: Event[]
 }
+
+export interface PageParticipant {
+    count: number;
+    participants: Participant[];
+}

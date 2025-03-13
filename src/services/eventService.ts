@@ -22,12 +22,17 @@ export async function getAllEventsWithPagination(keyword: string, pageSize: numb
   return pageEvents;
 }
 
-export function getParticipantsByEventTitlePagination(eventTitle: string, pageSize: number, pageNo: number) {
-  return repo.getParticipantsByEventTitlePagination(eventTitle, pageSize, pageNo);
+export async function getAllParticipantsWithPagination(keyword: string, pageSize: number, pageNo: number) {
+    const PageParticipant = await repo.getAllParticipantsWithEventPagination(keyword,pageSize, pageNo);
+  return PageParticipant;
 }
 
 export function getAllParticipants() {
   return repo.getAllParticipants();
+}
+
+export function getParticipantById(id: number) {
+  return repo.getParticipantById(id);
 }
 
   
