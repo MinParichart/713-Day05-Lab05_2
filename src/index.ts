@@ -12,6 +12,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173', 
   'https://713lab062p.vercel.app', 
+  'https://713lab062p-git-main-minparicharts-projects.vercel.app',
   'https://713lab062p-n07od2wlh-minparicharts-projects.vercel.app'
 ];
 const options: cors.CorsOptions = {
