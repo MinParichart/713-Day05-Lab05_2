@@ -9,7 +9,7 @@ dotenv.config();
 import { uploadFile } from './services/uploadFileService';
 const app = express();
 // const allowedOrigins = ['http://localhost:5173', 'https://713lab062p-git-main-minparicharts-projects.vercel.app']//https://713-2024-frontend.vercel.app'];
-const allowedOrigins = ['http://localhost:5173', 'https://713lab062p.vercel.app/'];
+const allowedOrigins = ['http://localhost:5173', 'https://713lab062p.vercel.app'];
 const options: cors.CorsOptions = {
     origin: allowedOrigins
   };
