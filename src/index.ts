@@ -15,12 +15,18 @@ const allowedOrigins = [
   'https://713lab062p-git-main-minparicharts-projects.vercel.app',
   'https://713lab062p-n07od2wlh-minparicharts-projects.vercel.app'
 ];
+
 const options: cors.CorsOptions = {
     origin: allowedOrigins
   };
   
   // Then pass these options to cors:
   app.use(cors(options));
+
+
+
+app.use(cors(options));
+
   
 app.use(express.json());
 app.use('/events',eventRoute);
